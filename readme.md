@@ -14,7 +14,9 @@ Populate has only been tested with Ruby 1.9.3 and Rails 3.1+. As such, it probab
 
     task :populate => :environment do
       populate User, 10..50
-      populate Article, 100..500
+      populate Article, 100..500 do |a|
+        a.tags = "tag1,tag2,tag3"
+      end
     end
    
 ## Credits

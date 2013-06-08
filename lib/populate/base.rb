@@ -1,8 +1,9 @@
 module Populate
   class Base
-    def initialize(klass, amount = 100)
+    def initialize(klass, amount = 100, &callback)
       @klass = klass
       @amount = amount
+      @callback = callback
     end
 
     def populate!
@@ -10,7 +11,10 @@ module Populate
       header "Populating #{quantity} #{@klass.to_s.pluralize}"
 
       quantity.times do
-        models << model = @klass.create{|m| populate_attributes(m)}
+        models << model = @klass.create do |m|
+          populate_attributes(m)
+          @callback.call(m) if @callback
+        end
         status(model)
       end
 

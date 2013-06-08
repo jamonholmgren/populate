@@ -8,7 +8,7 @@ module Populate
 end
 
 module Kernel
-  def populate(klass, amount = 100)
-    Populate::Base.new(klass, amount).populate!
+  def populate(klass, amount = 100, &callback)
+    Populate::Base.new(klass, amount, &callback).populate!
   end
 end
